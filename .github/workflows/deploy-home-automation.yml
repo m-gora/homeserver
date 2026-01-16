@@ -1,0 +1,23 @@
+name: Deploy Home automation
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'apps/**'
+      - 'cluster-init/**'
+
+jobs:
+  deploy:
+    runs-on: arc-runner-set
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to K3s
+        run: |
+          # 1. Always ensure the namespace exists first
+          kubectl apply -f cluster-init/namespace.yaml
+          
+          # 2. Apply all app configurations recursively
+          kubectl apply -R -f apps/
+          

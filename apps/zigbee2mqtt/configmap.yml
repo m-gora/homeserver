@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zigbee2mqtt-config
+  namespace: default
+data:
+  configuration.yml: |
+    homeassistant: true
+    permit_join: true
+    frontend: true
+    mqtt:
+      base_topic: zigbee2mqtt
+      server: mqtt://mosquitto.home-automation.svc.cluster.local:1883
+    serial:
+      port: /dev/ttyUSB0
+    devices:
+      '0x804b50fffe252c41':
+        friendly_name: TRV Big
+      '0x2c1165fffe3d4793':
+        friendly_name: TRV Small
+      '0x001788010823265f':
+        friendly_name: '0x001788010823265f'
+      '0x90fd9ffffe860d06':
+        friendly_name: '0x90fd9ffffe860d06'
+      '0x90fd9ffffe87784f':
+        friendly_name: '0x90fd9ffffe87784f'
+      '0xcc86ecfffe48575a':
+        friendly_name: '0xcc86ecfffe48575a'
+      '0x90fd9ffffe4a7d10':
+        friendly_name: '0x90fd9ffffe4a7d10'
+    advanced:
+      log_level: warn

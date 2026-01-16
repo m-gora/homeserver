@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mosquitto
+  namespace: home-automation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mosquitto
+  template:
+    metadata:
+      labels:
+        app: mosquitto
+    spec:
+      containers:
+      - name: mosquitto
+        image: eclipse-mosquitto:2
+        ports:
+        - containerPort: 1883
+        volumeMounts:
+        - name: config
+          mountPath: /mosquitto/config/mosquitto.conf
+          subPath: mosquitto.conf
+        - name: mosquitto-data
+          mountPath: /mosquitto/data
+        - name: mosquitto-logs
+          mountPath: /mosquitto/log
+      volumes:
+      - name: config
+        configMap:
+          name: mosquitto-config
+      - mosquitto-data:
+          hostPath:
+            path: /opt/docker-data/mosquitto/data
+            type: DirectoryOrCreate
+      - mosquitto-logs:
+          hostPath:
+            path: /opt/docker-data/mosquitto/log
+            type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 1883
+    targetPort: 1883
+  selector:
+    app: mosquitto
