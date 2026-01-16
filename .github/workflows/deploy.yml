@@ -4,7 +4,7 @@ on:
     branches: [ main ]
     paths:
       - 'apps/**'
-      - 'cluster-init/**'
+      - 'cluster/**'
       - '.github/workflows/deploy.yml'
 
 jobs:
