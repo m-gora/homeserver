@@ -30,14 +30,14 @@ spec:
       - name: config
         configMap:
           name: mosquitto-config
-      - mosquitto-data:
-          hostPath:
-            path: /opt/docker-data/mosquitto/data
-            type: DirectoryOrCreate
-      - mosquitto-logs:
-          hostPath:
-            path: /opt/docker-data/mosquitto/log
-            type: DirectoryOrCreate
+      - name: mosquitto-data
+        hostPath:
+          path: /opt/docker-data/mosquitto/data
+          type: DirectoryOrCreate
+      - name: mosquitto-logs
+        hostPath:
+          path: /opt/docker-data/mosquitto/log
+          type: DirectoryOrCreate
 ---
 apiVersion: v1
 kind: Service
