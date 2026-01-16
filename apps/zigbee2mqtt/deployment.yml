@@ -15,6 +15,14 @@ spec:
       labels:
         app: zigbee2mqtt
     spec:
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        nameservers:
+          - 10.43.0.10 # The standard K3s CoreDNS IP
+        searches:
+          - home-automation.svc.cluster.local
+          - svc.cluster.local
+          - cluster.local
       containers:
       - name: zigbee2mqtt
         image: koenkk/zigbee2mqtt:latest
