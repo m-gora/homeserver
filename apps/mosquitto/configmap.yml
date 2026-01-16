@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mosquitto-config
-  namespace: default
+  namespace: home-automation
 data:
   mosquitto.conf: |
     persistence true

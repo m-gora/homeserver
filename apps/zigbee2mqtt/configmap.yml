@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: zigbee2mqtt-config
-  namespace: default
+  namespace: home-automation
 data:
   configuration.yml: |
     homeassistant: true
