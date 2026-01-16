@@ -38,15 +38,3 @@ spec:
         hostPath:
           path: /opt/docker-data/mosquitto/log
           type: DirectoryOrCreate
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mosquitto
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 1883
-    targetPort: 1883
-  selector:
-    app: mosquitto
