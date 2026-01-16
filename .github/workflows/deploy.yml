@@ -5,6 +5,7 @@ on:
     paths:
       - 'apps/**'
       - 'cluster-init/**'
+      - '.github/workflows/deploy.yml'
 
 jobs:
   deploy:
