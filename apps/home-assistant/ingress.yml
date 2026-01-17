@@ -8,7 +8,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
-  - host: ha.cluster.yourdomain.com
+  - host: ha.cluster.marcodoes.tech
     http:
       paths:
       - path: /
