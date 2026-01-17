@@ -23,6 +23,7 @@ spec:
         - --cloudflare-proxied
         - --txt-owner-id=k3s-nuc-1
         - --exclude-record-types=A
+        - --expose-internal-ipv6
         - --cloudflare-record-comment="provisioned by external-dns"
         env:
         - name: CF_API_TOKEN
