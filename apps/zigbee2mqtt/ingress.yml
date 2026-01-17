@@ -5,8 +5,13 @@ metadata:
   namespace: home-automation
   annotations:
     external-dns.alpha.kubernetes.io/hostname: z2m.cluster.marcodoes.tech
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
+  tls:
+  - hosts:
+    - z2m.cluster.marcodoes.tech
+    secretName: zigbee2mqtt-tls
   rules:
   - host: z2m.cluster.marcodoes.tech
     http:
