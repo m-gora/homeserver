@@ -27,17 +27,13 @@ spec:
         ports:
         - containerPort: 1883
         volumeMounts:
-        - name: config
-          mountPath: /mosquitto/config/mosquitto.conf
-          subPath: mosquitto.conf
         - name: mosquitto-data
           mountPath: /mosquitto/data
         - name: mosquitto-logs
           mountPath: /mosquitto/log
+        - name: mosquitto-config
+          mountPath: /mosquitto/config
       volumes:
-      - name: config
-        configMap:
-          name: mosquitto-config
       - name: mosquitto-data
         hostPath:
           path: /opt/docker-home/mosquitto/data
@@ -45,4 +41,8 @@ spec:
       - name: mosquitto-logs
         hostPath:
           path: /opt/docker-home/mosquitto/log
+          type: DirectoryOrCreate
+      - name: mosquitto-config
+        hostPath:
+          path: /opt/docker-home/mosquitto/config
           type: DirectoryOrCreate
