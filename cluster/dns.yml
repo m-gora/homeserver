@@ -18,7 +18,7 @@ spec:
         image: registry.k8s.io/external-dns/external-dns:v0.20.0
         args:
         - --source=ingress
-        - --domain-filter=cluster.marcodoes.tech
+        - --domain-filter=marcodoes.tech
         - --provider=cloudflare
         - --cloudflare-proxied
         - --txt-owner-id=k3s-nuc-1
