@@ -4,7 +4,7 @@ metadata:
   name: zigbee2mqtt-ingress
   namespace: home-automation
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: z2m.cluster.yourdomain.com
+    external-dns.alpha.kubernetes.io/hostname: z2m.cluster.marcodoes.tech
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
