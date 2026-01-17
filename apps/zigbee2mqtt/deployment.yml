@@ -33,6 +33,9 @@ spec:
           mountPath: /dev/ttyUSB0
         - name: data
           mountPath: /app/data
+        - name: udev
+          mountPath: /run/udev
+          readOnly: true
       volumes:
       - name: usb
         hostPath:
@@ -41,4 +44,8 @@ spec:
       - name: data
         hostPath:
           path: /opt/docker-home/zigbee2mqtt
-          type: DirectoryOrCreate
+          type: DirectoryOrCreate\
+      - name: udev
+        hostPath:
+          path: /run/udev
+          type: Directory
