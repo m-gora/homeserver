@@ -4,7 +4,7 @@ metadata:
   name: mosquitto
   namespace: home-automation
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 1883
     targetPort: 1883

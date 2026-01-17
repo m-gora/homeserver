@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+  namespace: kube-system
+spec:
+  strategy: { type: Recreate }
+  selector:
+    matchLabels:
+      app: external-dns
+  template:
+    metadata:
+      labels:
+        app: external-dns
+  spec:
+    containers:
+    - name: external-dns
+      image: registry.k8s.io/external-dns/external-dns:v0.14.0
+      args:
+      - --source=ingress
+      - --domain-filter=cluster.marcodoes.tech
+      - --provider=cloudflare
+      - --cloudflare-proxied
+      - --feature-gates=IPv6
+      - --txt-owner-id=k3s-nuc-1
+      env:
+      - name: CF_API_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: cloudflare-api-token
+            key: token
