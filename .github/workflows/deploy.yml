@@ -21,9 +21,7 @@ jobs:
 
       - name: Deploy to K3s
         run: |
-          # 1. Always ensure the namespace exists first
-          kubectl apply -f cluster/namespaces.yml
+          kubectl apply -R -f cluster/
           
-          # 2. Apply all app configurations recursively
           kubectl apply -R -f apps/
           
