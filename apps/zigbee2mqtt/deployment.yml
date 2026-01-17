@@ -43,8 +43,8 @@ spec:
           type: CharDevice
       - name: data
         hostPath:
-          path: /opt/docker-home/zigbee2mqtt
-          type: DirectoryOrCreate\
+          path: /opt/docker-home/zigbee2mqtt/data
+          type: DirectoryOrCreate
       - name: udev
         hostPath:
           path: /run/udev
