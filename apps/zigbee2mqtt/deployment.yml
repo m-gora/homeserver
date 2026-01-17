@@ -18,7 +18,7 @@ spec:
       dnsPolicy: ClusterFirst
       dnsConfig:
         nameservers:
-          - 10.43.0.10 # The standard K3s CoreDNS IP
+          - 10.43.0.10
         searches:
           - home-automation.svc.cluster.local
           - svc.cluster.local
