@@ -5,7 +5,8 @@ metadata:
   namespace: home-automation
   annotations:
     external-dns.alpha.kubernetes.io/hostname: ha.marcodoes.tech
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   tls:
