@@ -40,9 +40,9 @@ spec:
           name: mosquitto-config
       - name: mosquitto-data
         hostPath:
-          path: /opt/docker-data/mosquitto/data
+          path: /opt/docker-home/mosquitto/data
           type: DirectoryOrCreate
       - name: mosquitto-logs
         hostPath:
-          path: /opt/docker-data/mosquitto/log
+          path: /opt/docker-home/mosquitto/log
           type: DirectoryOrCreate

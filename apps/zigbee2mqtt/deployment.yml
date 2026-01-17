@@ -43,7 +43,7 @@ spec:
           type: CharDevice
       - name: data
         hostPath:
-          path: /opt/docker-data/zigbee2mqtt
+          path: /opt/docker-home/zigbee2mqtt
           type: DirectoryOrCreate
       - name: zigbee2mqtt-config
         configMap:
