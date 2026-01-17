@@ -4,16 +4,17 @@ metadata:
   name: zigbee2mqtt-ingress
   namespace: home-automation
   annotations:
+    external-dns.alpha.kubernetes.io/hostname: z2m.marcodoes.tech
     kubernetes.io/ingress.class: "traefik"
     traefik.ingress.kubernetes.io/router.tls: "true"
-    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   tls:
   - hosts:
-    - z2m.cluster.marcodoes.tech
+    - z2m.marcodoes.tech
     secretName: zigbee2mqtt-tls
   rules:
-  - host: z2m.cluster.marcodoes.tech
+  - host: z2m.marcodoes.tech
     http:
       paths:
       - path: /

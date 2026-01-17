@@ -4,16 +4,16 @@ metadata:
   name: home-assistant-ingress
   namespace: home-automation
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: ha.cluster.marcodoes.tech
+    external-dns.alpha.kubernetes.io/hostname: ha.marcodoes.tech
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   tls:
   - hosts:
-    - ha.cluster.marcodoes.tech
+    - ha.marcodoes.tech
     secretName: home-assistant-tls
   rules:
-  - host: ha.cluster.marcodoes.tech
+  - host: ha.marcodoes.tech
     http:
       paths:
       - path: /
