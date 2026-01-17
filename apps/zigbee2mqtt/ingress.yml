@@ -1,8 +1,12 @@
-apiVersion: trafik.io/v1alpha1
-kind: IngressRoute
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: zigbee2mqtt-ingress
   namespace: home-automation
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
 spec:
   tls:
   - hosts:
