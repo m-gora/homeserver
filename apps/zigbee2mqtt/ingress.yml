@@ -6,7 +6,8 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/hostname: z2m.cluster.marcodoes.tech
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
   tls:
   - hosts:
@@ -22,4 +23,4 @@ spec:
           service:
             name: zigbee2mqtt
             port:
-              number: 80
+              number: 8080
