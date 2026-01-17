@@ -25,6 +25,7 @@ spec:
         - --exclude-record-types=A
         - --expose-internal-ipv6
         - --cloudflare-record-comment="provisioned by external-dns"
+        - --log-level=debug
         env:
         - name: CF_API_TOKEN
           valueFrom:
