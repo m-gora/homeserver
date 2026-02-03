@@ -1,0 +1,11 @@
+apiVersion: v2
+name: camunda-wrapper
+description: Camunda 8 for k3s
+type: application
+version: 0.1.0
+appVersion: "8.6.0"
+dependencies:
+  - name: camunda-platform
+    version: 8.6.0
+    repository: https://helm.camunda.io
+    alias: camunda

@@ -1,0 +1,56 @@
+camunda:
+  identity:
+    contextPath: "/identity"
+    keycloak:
+      enabled: false
+    env:
+      - name: IDENTITY_AUTH_PROVIDER_BACKEND_URL
+        value: "https://blackanthrax.eu.auth0.com"
+      - name: IDENTITY_AUTH_PROVIDER_ISSUER_URL
+        value: "https://blackanthrax.eu.auth0.com/"
+      - name: IDENTITY_AUTH_PROVIDER_CONFIG_URL
+        value: "https://blackanthrax.eu.auth0.com/.well-known/openid-configuration"
+      - name: IDENTITY_AUTH_PROVIDER_JWK_URL
+        value: "https://blackanthrax.eu.auth0.com/.well-known/jwks.json"
+      - name: IDENTITY_RESOURCE_PERMISSIONS_PREFIX
+        value: "https://camunda.io/roles"
+      - name: IDENTITY_AUTH_PROVIDER_CLIENT_ID
+        valueFrom:
+          secretKeyRef:
+            name: camunda-auth0-secret
+            key: client-id
+      - name: IDENTITY_AUTH_PROVIDER_CLIENT_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: camunda-auth0-secret
+            key: client-secret
+  webModeler:
+    enabled: false
+  operate:
+    contextPath: "/operate"
+  tasklist:
+    contextPath: "/tasklist"
+  optimize:
+    contextPath: "/optimize"
+  zeebe:
+    clusterSize: 1
+    partitionCount: 1
+    replicationFactor: 1
+
+  global:
+    identity:
+      auth:
+        type: GENERIC
+        publicIssuerUrl: "https://blackanthrax.eu.auth0.com/"
+        redirectUrl: "https://camunda.marcodoes.tech/identity/auth/login-callback"
+    ingress:
+      enabled: true
+      className: "traefik"
+      host: "camunda.marcodoes.tech"
+      tls:
+        enabled: true
+        secretName: camunda-tls
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: camunda.marcodoes.tech
+        traefik.ingress.kubernetes.io/router.tls: "true"
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
