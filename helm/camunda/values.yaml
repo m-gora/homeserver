@@ -28,8 +28,8 @@ camunda:
     enabled: false
   orchestration:
     contextPath: "/"
-    clusterSize: 1
-    replicationFactor: 1
+    clusterSize: "1"
+    replicationFactor: "1"
   operate:
     contextPath: "/operate"
   tasklist:
