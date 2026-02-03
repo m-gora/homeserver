@@ -28,16 +28,17 @@ camunda:
     enabled: false
   orchestration:
     contextPath: "/"
+    clusterSize: 1
+    replicationFactor: 1
   operate:
     contextPath: "/operate"
   tasklist:
     contextPath: "/tasklist"
   optimize:
     contextPath: "/optimize"
-  zeebe:
-    clusterSize: 1
-    partitionCount: 1
-    replicationFactor: 1
+  elasticsearch:
+    master:
+      replicaCount: 1
 
   global:
     identity:
