@@ -26,6 +26,8 @@ camunda:
             key: client-secret
   webModeler:
     enabled: false
+  orchestration:
+    contextPath: "/"
   operate:
     contextPath: "/operate"
   tasklist:
