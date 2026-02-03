@@ -19,7 +19,7 @@ jobs:
       - name: Discover Charts
         id: set-matrix
         run: |
-          CHARTS=$(find helm -mindepth 1 -maxdepth 1 -type d -exec test -e '{}/Chart.yaml' \; -print | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1]')
+          CHARTS=$(find helm -mindepth 1 -maxdepth 1 -type d -exec test -e '{}/Chart.yml' \; -print | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1]')
           echo "Found charts: $CHARTS"
           echo "matrix=$CHARTS" >> $GITHUB_OUTPUT
 
