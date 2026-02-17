@@ -29,16 +29,19 @@ camunda:
   orchestration:
     contextPath: "/"
     clusterSize: "1"
-    replicationFactor: "1"
+    replicationFactor: "0"
   operate:
     contextPath: "/operate"
+    replicaCount: 0
   tasklist:
     contextPath: "/tasklist"
+    replicaCount: 0
   optimize:
     contextPath: "/optimize"
+    replicaCount: 0
   elasticsearch:
     master:
-      replicaCount: 1
+      replicaCount: 0
 
   global:
     identity:
