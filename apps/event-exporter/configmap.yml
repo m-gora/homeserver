@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: event-exporter-cfg
+  namespace: monitoring
+data:
+  config.yaml: |
+    maxEventAgeSeconds: 60
+    route:
+      routes:
+        # Pod crash / restart alerts
+        - match:
+            - receiver: discord
+              matchPolicyType: All
+              matchPolicy:
+                - field: type
+                  value: Warning
+                - field: reason
+                  pattern: "CrashLoopBackOff|BackOff|Failed|Killing|Unhealthy|OOMKilling"
+        # Scheduling failure alerts
+        - match:
+            - receiver: discord
+              matchPolicyType: All
+              matchPolicy:
+                - field: type
+                  value: Warning
+                - field: reason
+                  pattern: "FailedScheduling|FailedMount|FailedAttachVolume"
+        # Node issue alerts
+        - match:
+            - receiver: discord
+              matchPolicyType: All
+              matchPolicy:
+                - field: type
+                  value: Warning
+                - field: reason
+                  pattern: "NodeNotReady|NodeNotSchedulable|Rebooted|EvictionThresholdMet"
+    receivers:
+      - name: discord
+        webhook:
+          endpoint: "$(DISCORD_WEBHOOK_URL)"
+          headers:
+            Content-Type: application/json
+          layout:
+            content: |-
+              **⚠️ K8s Alert**
+              **Reason:** {{ .Reason }}
+              **Object:** {{ .InvolvedObject.Namespace }}/{{ .InvolvedObject.Name }} ({{ .InvolvedObject.Kind }})
+              **Message:** {{ .Message }}

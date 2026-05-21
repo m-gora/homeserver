@@ -6,6 +6,7 @@
 set -euo pipefail
 
 CF_API_TOKEN="${CF_API_TOKEN:?Set CF_API_TOKEN env var before running}"
+DISCORD_WEBHOOK_URL="${DISCORD_WEBHOOK_URL:?Set DISCORD_WEBHOOK_URL env var before running}"
 
 echo "🚀 Starting Cluster Bootstrap..."
 
@@ -20,6 +21,12 @@ kubectl create secret generic cloudflare-api-token-secret \
 kubectl create secret generic cloudflare-api-token \
   --namespace kube-system \
   --from-literal=token="$CF_API_TOKEN" \
+  --dry-run=client -o yaml | kubectl apply -f -
+
+kubectl create namespace monitoring --dry-run=client -o yaml | kubectl apply -f -
+kubectl create secret generic discord-webhook \
+  --namespace monitoring \
+  --from-literal=url="$DISCORD_WEBHOOK_URL" \
   --dry-run=client -o yaml | kubectl apply -f -
 
 # 2. INSTALL CERT-MANAGER (must exist before ArgoCD for TLS)
@@ -48,6 +55,45 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 
 echo "⏳ Waiting for ArgoCD to be ready..."
 kubectl -n argocd rollout status deployment/argocd-server --timeout=300s
+
+# 5.1 CONFIGURE ARGOCD NOTIFICATIONS
+echo "🔔 Configuring ArgoCD Notifications..."
+kubectl create secret generic argocd-notifications-secret \
+  --namespace argocd \
+  --from-literal=discord-webhook-url="$DISCORD_WEBHOOK_URL" \
+  --dry-run=client -o yaml | kubectl apply -f -
+
+kubectl apply -f - <<'EOF'
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+  namespace: argocd
+data:
+  service.webhook.discord: |
+    url: $discord-webhook-url
+    headers:
+    - name: Content-Type
+      value: application/json
+  template.app-sync-failed: |
+    webhook:
+      discord:
+        method: POST
+        body: |
+          {"content": "**🔴 ArgoCD Sync Failed**\n**App:** {{.app.metadata.name}}\n**Project:** {{.app.spec.project}}\n**Message:** {{.app.status.operationState.message}}"}
+  template.app-health-degraded: |
+    webhook:
+      discord:
+        method: POST
+        body: |
+          {"content": "**🟡 ArgoCD App Degraded**\n**App:** {{.app.metadata.name}}\n**Project:** {{.app.spec.project}}\n**Health:** {{.app.status.health.status}}"}
+  trigger.on-sync-failed: |
+    - when: app.status.operationState.phase in ['Error', 'Failed']
+      send: [app-sync-failed]
+  trigger.on-health-degraded: |
+    - when: app.status.health.status == 'Degraded'
+      send: [app-health-degraded]
+EOF
 
 # 6. APPLY ARGOCD APPLICATIONS (workloads only)
 echo "🚢 Deploying ArgoCD Applications..."
