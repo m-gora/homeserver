@@ -11,30 +11,18 @@ data:
         # Pod crash / restart alerts
         - match:
             - receiver: discord
-              matchPolicyType: All
-              matchPolicy:
-                - field: type
-                  value: Warning
-                - field: reason
-                  pattern: "CrashLoopBackOff|BackOff|Failed|Killing|Unhealthy|OOMKilling"
+              type: Warning
+              reason: "CrashLoopBackOff|BackOff|Failed|Killing|Unhealthy|OOMKilling"
         # Scheduling failure alerts
         - match:
             - receiver: discord
-              matchPolicyType: All
-              matchPolicy:
-                - field: type
-                  value: Warning
-                - field: reason
-                  pattern: "FailedScheduling|FailedMount|FailedAttachVolume"
+              type: Warning
+              reason: "FailedScheduling|FailedMount|FailedAttachVolume"
         # Node issue alerts
         - match:
             - receiver: discord
-              matchPolicyType: All
-              matchPolicy:
-                - field: type
-                  value: Warning
-                - field: reason
-                  pattern: "NodeNotReady|NodeNotSchedulable|Rebooted|EvictionThresholdMet"
+              type: Warning
+              reason: "NodeNotReady|NodeNotSchedulable|Rebooted|EvictionThresholdMet"
     receivers:
       - name: discord
         webhook:
