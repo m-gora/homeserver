@@ -25,7 +25,7 @@ spec:
           - cluster.local
       containers:
       - name: zigbee2mqtt
-        image: koenkk/zigbee2mqtt:latest
+        image: koenkk/zigbee2mqtt:2.14
         securityContext:
           privileged: true
         volumeMounts:

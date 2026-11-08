@@ -1,0 +1,32 @@
+version: 2
+updates:
+  # Monitor Kubernetes manifests for container image bumps
+  - package-ecosystem: "docker"
+    directory: "/apps/home-assistant"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    groups:
+      homeassistant:
+        patterns:
+          - "ghcr.io/home-assistant/*"
+
+  - package-ecosystem: "docker"
+    directory: "/apps/mosquitto"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    groups:
+      mosquitto:
+        patterns:
+          - "eclipse-mosquitto/*"
+
+  - package-ecosystem: "docker"
+    directory: "/apps/zigbee2mqtt"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    groups:
+      zigbee2mqtt:
+        patterns:
+          - "koenkk/zigbee2mqtt*"
